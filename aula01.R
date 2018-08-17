@@ -25,25 +25,25 @@ dim(bd) #tamanho
 names(bd) #nomes das variáveis
 head(bd) #primeiros casos
 
-# Vamos investigar as variáveis isei88 e anos de escolaridade
+# Vamos investigar as variáveis escpai e anos de escolaridade
 # Que tipo de variáveis são?
-class(bd$isei88)
+class(bd$escpai)
 class(bd$anosesco)
 
 # Verificando estatísticas descritivas
-summary(bd$isei88)
+summary(bd$escpai)
 summary(bd$anosesco)
 
 # Agora, vamos investigar a relação entre essas variáveis
-ggplot(bd, aes(x = anosesco, y = isei88)) +
+ggplot(bd, aes(x = escpai, y = anosesco)) +
   geom_point()
 
 
 # Se formos estimar uma relação entre essas variáveis, o que obtemos?
-ggplot(bd, aes(x = anosesco, y = isei88)) +
+ggplot(bd, aes(x = escpai, y = anosesco)) +
   geom_point() +
   stat_smooth(method = "lm")
 
 
 # Vamos verificar o coeficiente de correlação?
-cor(bd$anosesco, bd$isei88)
+cor(bd$anosesco, bd$escpai)
