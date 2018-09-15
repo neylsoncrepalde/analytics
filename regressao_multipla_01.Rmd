@@ -1,0 +1,63 @@
+---
+title: "Analytics"
+subtitle: "Regressão múltipla"
+author: "Prof. Neylson Crepalde"
+output: html_notebook
+---
+
+```{r setup, include=F}
+# Se as bibliotecas necessárias não estiveram instaladas, instale
+if (!"readr" %in% installed.packages()) install.packages("readr")
+if (!"dplyr" %in% installed.packages()) install.packages("dplyr")
+if (!"ggplot2" %in% installed.packages()) install.packages("ggplot2")
+if (!"haven" %in% installed.packages()) install.packages("haven")
+
+# Carregando as bibliotecas necessárias
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(haven)
+
+# Carrega uma amostra da PNAD 2014
+
+bd = read_sav("https://github.com/neylsoncrepalde/MODUS/blob/master/PNAD2014_30a50_novo4.sav?raw=true")
+dim(bd)
+#install.packages("texreg")
+library(texreg)
+```
+
+Vamos implementar nosso primeiro modelo de regressão linear múltipla. Nesse modelo Y = isei88, X1 = anosesco, X2 = escpai.
+
+```{r regressao1}
+# 3 Regressões
+reg1 = lm(isei88 ~ anosesco, data = bd)
+reg2 = lm(isei88 ~ escpai, data = bd)
+reg3 = lm(isei88 ~ anosesco + escpai, data = bd)
+
+screenreg(list(reg1,reg2,reg3))
+```
+
+## Testando os pressupostos do modelo
+
+Testando o pressuposto da normalidade dos erros:
+
+```{r normalidade}
+e = residuals(reg3)
+b0 = reg3$coefficients[1]
+b1 = reg3$coefficients[2]
+b2 = reg3$coefficients[3]
+
+ggplot(NULL, aes(e)) + geom_histogram() # histograma
+qqnorm(e) #Gráfico de probabilidade normal
+```
+
+Agora, vamos testar os pressupostos da homoscedasticidade e da independência do erro.
+
+```{r homoind}
+plot(reg3)
+```
+
+```{r}
+getwd()
+```
+

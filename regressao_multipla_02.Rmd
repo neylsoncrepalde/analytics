@@ -1,0 +1,99 @@
+---
+title: "Regressão Múltipla 2"
+subtitle: "Analytics"
+author: "Prof. Neylson Crepalde"
+date: "14 de setembro de 2018"
+output: html_notebook
+---
+
+```{r setup, include=F}
+# Se as bibliotecas necessárias não estiveram instaladas, instale
+if (!"readr" %in% installed.packages()) install.packages("readr")
+if (!"dplyr" %in% installed.packages()) install.packages("dplyr")
+if (!"ggplot2" %in% installed.packages()) install.packages("ggplot2")
+if (!"haven" %in% installed.packages()) install.packages("haven")
+
+# Carregando as bibliotecas necessárias
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(haven)
+
+# Carrega uma amostra da PNAD 2014
+
+bd = read_sav("https://github.com/neylsoncrepalde/MODUS/blob/master/PNAD2014_30a50_novo4.sav?raw=true")
+dim(bd)
+```
+
+
+Vamos explicar o rendimento do trabalho a partir de duas
+variaveis, a saber, anosesco e isei88.
+
+```{r reg1}
+# centralizar isei88 na media
+bd$iseicent = bd$isei88 - mean(bd$isei88)
+reg1 = lm(lnrenda ~ anosesco + iseicent, data = bd)
+summary(reg1)
+b0_reais = exp(reg1$coefficients[1])
+b0_reais
+```
+
+## Testando pressupostos
+
+Linearidade
+
+```{r linear}
+b0 = reg1$coefficients[1]
+b1 = reg1$coefficients[2]
+b2 = reg1$coefficients[3]
+ggplot(bd, aes(y = lnrenda, x = iseicent)) +
+  geom_point() +
+  geom_abline(intercept = b0,
+              slope = b2,
+              col = "red", lwd = 2)
+
+
+```
+
+Normalidade do erro
+
+```{r norm}
+e = residuals(reg1)
+hist(e)
+qqnorm(e)
+```
+
+```{r homoind}
+plot(reg1)
+```
+
+
+
+```{r}
+#install.packages("car")
+library(car)
+#help(vif)
+vif(reg1)
+```
+
+
+### Exercicio
+
+Vamos estimar uma regressao para explicar a escolaridade
+do individuo. Para isso, usaremos como variaveis explicativas ou independentes, escpai, escmae e isei88pai.
+Interprete os resultados, teste os pressupostos do modelo,
+verifique se ha multicolinearidade. Divirta-se!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
