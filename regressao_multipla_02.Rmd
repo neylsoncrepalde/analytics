@@ -85,6 +85,18 @@ Interprete os resultados, teste os pressupostos do modelo,
 verifique se ha multicolinearidade. Divirta-se!!!
 
 
+### Dever de casa
+Estime as seguintes regressoes e interprete os resultados
+
+$$anosesco = b_0 + b_1 \cdot escmae + b_2 \cdot escpai $$
+
+$$LnRenda = b_0 + b_1 \cdot isei88 + b_2 \cdot escmae $$
+
+$$isei88 = b_0 + b_1 \cdot anosesco + b_2 \cdot escpai + b_3 \cdot escmae + b_4 \cdot isei88pai $$
+
+
+
+
 
 
 
