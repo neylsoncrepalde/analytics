@@ -53,3 +53,7 @@ for(i in 1:nrow(interesse)){
   for(j in 1:ncol(interesse)) scores_pca1[i,j] <- sum(interesse[i,]*loadings_pca1[,j])
 }
 print(scores_pca1)
+
+# Exercício - estimar uma análise de componentes principais para os dados de avaliação de coxinhas
+help("MingotiTb3.5")
+bd = MingotiTb3.5
