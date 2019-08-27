@@ -108,4 +108,12 @@ cat(paste("R^2 =", round(SQE/SQT, 4)))
 
 
 #Vejamos o coeficiente de determinação da primeira regressão ceosal1
-summary(fit)$r.squared
+cat("R2 da primeira regressão:")
+yhat = predict(fit)
+var(yhat) / var(ceosal1$salary)
+
+# Verifica
+testthat::expect_equal(
+  var(yhat) / var(ceosal1$salary) , 
+  summary(fit)$r.squared
+)
