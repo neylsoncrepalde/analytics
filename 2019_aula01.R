@@ -98,3 +98,14 @@ SQR = sum(resid(fit3)^2)
 ## SQT = SQR + SQE
 testthat::expect_equal(SQT, SQR + SQE)
 
+####################################################
+## Grau de ajuste / coeficiente de determinação R^2
+####################################################
+
+# R^2 = SQE/SQT = 1 - SQR/SQT
+testthat::expect_equal(SQE/SQT, 1 - SQR/SQT)
+cat(paste("R^2 =", round(SQE/SQT, 4)))
+
+
+#Vejamos o coeficiente de determinação da primeira regressão ceosal1
+summary(fit)$r.squared
