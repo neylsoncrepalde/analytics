@@ -117,3 +117,64 @@ testthat::expect_equal(
   var(yhat) / var(ceosal1$salary) , 
   summary(fit)$r.squared
 )
+
+
+######################################
+## Pressupostos da regressão linear
+######################################
+
+## 1) Linear nos parâmetros
+plot(vote1$shareA, vote1$voteA)
+abline(fit3, col="red", lwd=3)
+
+## 2) Amostragem aleatória
+set.seed(123)
+
+x = runif(10000)
+y = 3 + 1.5*x + rnorm(10000)
+
+amostra = sample(10000, 300)
+lm(y[amostra] ~ x[amostra])
+
+## 3) Média condicional zero  ---- E(u|x) = 0
+mean(resid(fit))
+mean(resid(fit2))
+mean(resid(fit3))
+
+## 4) Variação amostral na variável independente
+testthat::expect_gt(var(vote1$shareA), 0)  # Tem variação 
+
+constante = rep(1, 10) # Não tem variação
+testthat::expect_gt(var(constante), 0)
+
+
+## TEOREMA DA INEXISTÊNCIA DE VIÉS (baseado nas hipóteses anteriores)
+# E(beta0hat) = beta0, ou seja, beta0hat é não viesado para beta0
+# E(beta1hat) = beta1, ou seja, beta1hat é não viesado para beta1
+
+
+#################################
+## Pausa para um exemplo rápido
+#################################
+data("meap93")
+?meap93
+fit4 = lm(math10 ~ lnchprg, meap93)
+coef(fit4)
+summary(fit4)$r.squared
+# Provável dependência entre u e x
+
+## 5) Homoscedasticidade - variância constante do erro
+## var(u|x) = sigma^2
+
+## Heteroscedasticidade na equação de salário
+fit2 # Lembra dessa?
+# Para verificar a heteroscedasticidade, podemos plotar yhat e os resíduos
+plot(predict(fit2), resid(fit2))
+
+
+##################
+### EXERCÍCIOS ###
+##################
+
+## Exercícios do livro do Wooldridge 2.3, 2.4 e 2.5.
+## Entregar um Rnotebook ou um JupyterNotebook
