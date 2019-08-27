@@ -150,6 +150,8 @@ testthat::expect_gt(var(constante), 0)
 
 
 ## TEOREMA DA INEXISTÊNCIA DE VIÉS (baseado nas hipóteses anteriores)
+## ou TEOREMA DE GAUSS-MARKOV: os estimadores de MQO são MELNT
+## melhor estimador linear não tendencioso (viesado)
 # E(beta0hat) = beta0, ou seja, beta0hat é não viesado para beta0
 # E(beta1hat) = beta1, ou seja, beta1hat é não viesado para beta1
 
