@@ -78,6 +78,7 @@ abline(fit3, col="red", lwd=3)
 mean(resid(fit3))
 
 # 2) a covariância dos regressores e do resíduo é igual a 0
+# independência entre regressor(x) e resíduo (u)
 cov(vote1$shareA, resid(fit3))
 
 
