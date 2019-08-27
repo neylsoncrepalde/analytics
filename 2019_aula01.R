@@ -7,6 +7,7 @@
 
 install.packages("wooldridge")
 install.packages("tidyverse")
+install.packages("testthat")
 
 library(wooldridge)
 library(tidyverse)
@@ -67,3 +68,33 @@ coef(fit3)
 # Plota a curva de regressão
 plot(vote1$shareA, vote1$voteA)
 abline(fit3, col="red", lwd=3)
+
+
+################################################
+# Verificando propriedades algébricas do modelo
+################################################
+
+# 1) A média dos resíduos é igual a 0
+mean(resid(fit3))
+
+# 2) a covariância dos regressores e do resíduo é igual a 0
+cov(vote1$shareA, resid(fit3))
+
+
+## Verifica a soma dos quadrados total
+# Soma dos quadrados totais
+# SQT = somatório de (y - y_barra)^2
+SQT = sum((vote1$voteA - mean(vote1$voteA))^2)
+
+# Soma dos quadrados explicada
+# SQE = somatório de (yhat - y_barra)^2
+yhat = predict(fit3)
+SQE = sum((yhat - mean(vote1$voteA))^2)
+
+# Soma dos quadrados dos resíduos
+# SQR - somatório de u^2
+SQR = sum(resid(fit3)^2)
+
+## SQT = SQR + SQE
+testthat::expect_equal(SQT, SQR + SQE)
+
